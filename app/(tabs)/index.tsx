@@ -1,69 +1,198 @@
-import { StyleSheet, ScrollView, Image } from 'react-native';
+import { StyleSheet, ScrollView, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { Link } from 'expo-router';
 import React from 'react';
 
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   
-  // Mock data for recently played
-  const recentlyPlayed = [
-    { id: '1', title: 'Daily Mix 1', artist: 'For You', cover: 'https://via.placeholder.com/150' },
-    { id: '2', title: 'Hip Hop Mix', artist: 'Drake, Kendrick Lamar, J. Cole', cover: 'https://via.placeholder.com/150' },
-    { id: '3', title: 'Top Hits', artist: 'Global', cover: 'https://via.placeholder.com/150' },
-    { id: '4', title: 'Chill Vibes', artist: 'Lo-fi, Jazz, Ambient', cover: 'https://via.placeholder.com/150' },
+  // Featured content
+  const featuredContent = {
+    title: "LeBron's Greatest Moments",
+    description: "A collection of iconic plays from the King's career",
+    image: "https://via.placeholder.com/600x300"
+  };
+  
+  // Recent audio content
+  const recentAudios = [
+    {
+      id: '1',
+      title: 'Game 7 Commentary',
+      duration: '5:23',
+      category: 'Commentary',
+      image: 'https://via.placeholder.com/100',
+    },
+    {
+      id: '2',
+      title: 'LeBron Post-Game Interview',
+      duration: '8:45',
+      category: 'Interview',
+      image: 'https://via.placeholder.com/100',
+    },
+    {
+      id: '3',
+      title: 'Career Highlight Reel',
+      duration: '12:18',
+      category: 'Highlights',
+      image: 'https://via.placeholder.com/100',
+    },
   ];
   
-  // Mock data for playlists
-  const playlists = [
-    { id: '1', title: 'Your Favorites', cover: 'https://via.placeholder.com/150' },
-    { id: '2', title: 'Running Mix', cover: 'https://via.placeholder.com/150' },
-    { id: '3', title: 'Study Session', cover: 'https://via.placeholder.com/150' },
-    { id: '4', title: 'Party Playlist', cover: 'https://via.placeholder.com/150' },
+  // Glaze content highlights
+  const glazeHighlights = [
+    {
+      id: '1',
+      title: '4x NBA Champion',
+      image: 'https://via.placeholder.com/150',
+    },
+    {
+      id: '2',
+      title: 'All-Time Scoring Leader',
+      image: 'https://via.placeholder.com/150',
+    },
+    {
+      id: '3',
+      title: '4x NBA MVP',
+      image: 'https://via.placeholder.com/150',
+    },
+  ];
+  
+  // Blog post highlights
+  const blogHighlights = [
+    {
+      id: '1',
+      title: "The Evolution of LeBron's Game",
+      author: 'Basketball_Historian',
+      date: 'May 5, 2023',
+      excerpt: "How LeBron has adapted his play style over his career...",
+      image: 'https://via.placeholder.com/200x120',
+    },
+    {
+      id: '2',
+      title: 'Impact Beyond Basketball',
+      author: 'SportsSociologist',
+      date: 'June 12, 2023',
+      excerpt: "LeBron's influence on social justice and education...",
+      image: 'https://via.placeholder.com/200x120',
+    },
   ];
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Good Evening</Text>
+          <Text style={styles.welcomeText}>Welcome to</Text>
+          <Text style={styles.headerTitle}>Lebronify</Text>
         </View>
         
-        <Text style={styles.sectionTitle}>Recently Played</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalList}>
-          {recentlyPlayed.map((item) => (
-            <View key={item.id} style={[styles.card, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
-              <Image source={{ uri: item.cover }} style={styles.albumCover} />
-              <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
-              <Text style={styles.subtitle} numberOfLines={1}>{item.artist}</Text>
-            </View>
-          ))}
-        </ScrollView>
-        
-        <Text style={styles.sectionTitle}>Your Playlists</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalList}>
-          {playlists.map((item) => (
-            <View key={item.id} style={[styles.card, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
-              <Image source={{ uri: item.cover }} style={styles.albumCover} />
-              <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
-            </View>
-          ))}
-        </ScrollView>
-        
-        <Text style={styles.sectionTitle}>Made For You</Text>
+        {/* Featured Content */}
         <View style={styles.featuredContainer}>
           <Image 
-            source={{ uri: 'https://via.placeholder.com/300' }} 
+            source={{ uri: featuredContent.image }} 
             style={styles.featuredImage} 
           />
-          <Text style={styles.featuredTitle}>Weekly Discovery</Text>
-          <Text style={styles.featuredSubtitle}>New music based on your listening</Text>
+          <View style={[styles.featuredOverlay, { backgroundColor: Colors[colorScheme ?? 'light'].tint + '90' }]}>
+            <Text style={styles.featuredTitle}>{featuredContent.title}</Text>
+            <Text style={styles.featuredDescription}>{featuredContent.description}</Text>
+            <TouchableOpacity style={styles.watchButton}>
+              <Text style={styles.watchButtonText}>Watch Now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        
+        {/* Recent Audios Section */}
+        <View style={styles.sectionContainer}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Recent Audio</Text>
+            <Link href="/library" asChild>
+              <TouchableOpacity>
+                <Text style={[styles.viewAllText, { color: Colors[colorScheme ?? 'light'].tint }]}>See All</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+          
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+            {recentAudios.map(audio => (
+              <TouchableOpacity 
+                key={audio.id} 
+                style={[styles.audioCard, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}
+              >
+                <Image source={{ uri: audio.image }} style={styles.audioImage} />
+                <View style={styles.audioInfo}>
+                  <Text style={styles.audioTitle} numberOfLines={1}>{audio.title}</Text>
+                  <Text style={styles.audioSubtitle}>{audio.category} • {audio.duration}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+        
+        {/* Glaze Highlights Section */}
+        <View style={styles.sectionContainer}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Glaze Highlights</Text>
+            <Link href="/glaze" asChild>
+              <TouchableOpacity>
+                <Text style={[styles.viewAllText, { color: Colors[colorScheme ?? 'light'].tint }]}>See All</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+          
+          <View style={styles.glazeGrid}>
+            {glazeHighlights.map(item => (
+              <TouchableOpacity 
+                key={item.id} 
+                style={[styles.glazeCard, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}
+              >
+                <Image source={{ uri: item.image }} style={styles.glazeImage} />
+                <Text style={styles.glazeTitle}>{item.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+        
+        {/* Blog Highlights Section */}
+        <View style={styles.sectionContainer}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>From the Blog</Text>
+            <Link href="/blog" asChild>
+              <TouchableOpacity>
+                <Text style={[styles.viewAllText, { color: Colors[colorScheme ?? 'light'].tint }]}>See All</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+          
+          {blogHighlights.map(blog => (
+            <TouchableOpacity 
+              key={blog.id} 
+              style={[styles.blogCard, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}
+            >
+              <Image source={{ uri: blog.image }} style={styles.blogImage} />
+              <View style={styles.blogContent}>
+                <Text style={styles.blogTitle}>{blog.title}</Text>
+                <Text style={styles.blogAuthor}>By {blog.author} • {blog.date}</Text>
+                <Text style={styles.blogExcerpt} numberOfLines={2}>{blog.excerpt}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        
+        {/* Call to Action */}
+        <View style={[styles.ctaContainer, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}>
+          <Text style={styles.ctaTitle}>Share Your LeBron Content</Text>
+          <Text style={styles.ctaDescription}>Upload audio, highlights, or write a blog post</Text>
+          <TouchableOpacity style={styles.ctaButton}>
+            <Text style={styles.ctaButtonText}>Get Started</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
 }
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -75,62 +204,171 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: 60,
-    marginBottom: 20,
+    marginBottom: 24,
+  },
+  welcomeText: {
+    fontSize: 16,
+    opacity: 0.8,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
+  },
+  featuredContainer: {
+    position: 'relative',
+    height: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 24,
+  },
+  featuredImage: {
+    width: '100%',
+    height: '100%',
+  },
+  featuredOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+  },
+  featuredTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 4,
+  },
+  featuredDescription: {
+    fontSize: 14,
+    color: 'white',
+    opacity: 0.9,
+    marginBottom: 12,
+  },
+  watchButton: {
+    backgroundColor: 'white',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+  },
+  watchButtonText: {
+    fontWeight: '600',
+  },
+  sectionContainer: {
+    marginBottom: 24,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 24,
+  },
+  viewAllText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  horizontalScroll: {
     marginBottom: 16,
   },
-  horizontalList: {
-    flexDirection: 'row',
-    marginBottom: 10,
+  audioCard: {
+    width: 160,
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginRight: 12,
   },
-  card: {
-    width: 150,
-    marginRight: 16,
-    borderRadius: 8,
-    padding: 10,
-    paddingBottom: 16,
+  audioImage: {
+    width: '100%',
+    height: 160,
   },
-  albumCover: {
-    width: 130,
-    height: 130,
-    borderRadius: 4,
-    marginBottom: 8,
+  audioInfo: {
+    padding: 12,
   },
-  title: {
-    fontWeight: '600',
+  audioTitle: {
     fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 4,
   },
-  subtitle: {
+  audioSubtitle: {
     fontSize: 12,
-    marginTop: 4,
+    opacity: 0.7,
+  },
+  glazeGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  glazeCard: {
+    width: (width - 44) / 3,
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  glazeImage: {
+    width: '100%',
+    height: 100,
+  },
+  glazeTitle: {
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 8,
+    textAlign: 'center',
+  },
+  blogCard: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 12,
+  },
+  blogImage: {
+    width: 100,
+    height: 100,
+  },
+  blogContent: {
+    flex: 1,
+    padding: 12,
+  },
+  blogTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  blogAuthor: {
+    fontSize: 12,
+    opacity: 0.7,
+    marginBottom: 6,
+  },
+  blogExcerpt: {
+    fontSize: 14,
     opacity: 0.8,
   },
-  featuredContainer: {
-    marginTop: 8,
-    marginBottom: 30,
+  ctaContainer: {
+    padding: 24,
+    borderRadius: 12,
     alignItems: 'center',
+    marginBottom: 40,
   },
-  featuredImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-  },
-  featuredTitle: {
+  ctaTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 12,
+    color: 'white',
+    marginBottom: 8,
   },
-  featuredSubtitle: {
+  ctaDescription: {
     fontSize: 14,
-    opacity: 0.8,
-    marginTop: 4,
+    color: 'white',
+    opacity: 0.9,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  ctaButton: {
+    backgroundColor: 'white',
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    borderRadius: 24,
+  },
+  ctaButtonText: {
+    fontWeight: '600',
   },
 });

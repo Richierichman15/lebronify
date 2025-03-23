@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
@@ -7,109 +7,177 @@ import React, { useState } from 'react';
 export default function GlazeScreen() {
   const colorScheme = useColorScheme();
   
-  // Mock data for Glaze recommendations - unique AI-enhanced mixes
-  const recommendations = [
+  // Mock data for LeBron's career highlights
+  const careerHighlights = [
     { 
       id: '1', 
-      title: 'Your Energy Mix', 
-      description: 'Upbeat tracks to boost your energy', 
-      cover: 'https://via.placeholder.com/200',
-      gradient: ['#FC5C7D', '#6A82FB']
+      title: '4x NBA Champion', 
+      description: 'Won championships with Heat (2012, 2013) and Cavaliers (2016), Lakers (2020)', 
+      image: 'https://via.placeholder.com/400x200',
     },
     { 
       id: '2', 
-      title: 'Calm Focus', 
-      description: 'Concentration-enhancing instrumentals', 
-      cover: 'https://via.placeholder.com/200',
-      gradient: ['#43cea2', '#185a9d']
+      title: 'All-Time Scoring Leader', 
+      description: 'Surpassed Kareem Abdul-Jabbar as NBA's all-time leading scorer on February 7, 2023', 
+      image: 'https://via.placeholder.com/400x200',
     },
     { 
       id: '3', 
-      title: 'Nostalgia Trip', 
-      description: 'Tracks that remind you of good times', 
-      cover: 'https://via.placeholder.com/200',
-      gradient: ['#c31432', '#240b36']
+      title: '4x NBA MVP', 
+      description: 'Won the regular season MVP in 2009, 2010, 2012, and 2013', 
+      image: 'https://via.placeholder.com/400x200',
     },
     { 
       id: '4', 
-      title: 'Mood Lifter', 
-      description: 'Songs chosen to improve your mood', 
-      cover: 'https://via.placeholder.com/200',
-      gradient: ['#11998e', '#38ef7d']
+      title: '19x NBA All-Star', 
+      description: 'Selected to the All-Star team 19 consecutive times since 2005', 
+      image: 'https://via.placeholder.com/400x200',
     },
   ];
   
-  const [selectedMood, setSelectedMood] = useState('happy');
-
-  const moods = [
-    { id: 'happy', label: 'Happy', emoji: '😊' },
-    { id: 'chill', label: 'Chill', emoji: '😌' },
-    { id: 'energetic', label: 'Energetic', emoji: '🔥' },
-    { id: 'focus', label: 'Focus', emoji: '🧠' },
-    { id: 'workout', label: 'Workout', emoji: '💪' },
+  // LeBron's career stats
+  const careerStats = [
+    { stat: 'Points', value: '39,868', description: 'All-time NBA scoring leader' },
+    { stat: 'Assists', value: '10,900+', description: '4th all-time in NBA history' },
+    { stat: 'Rebounds', value: '11,140+', description: 'Among the top 30 all-time' },
+    { stat: 'Steals', value: '2,240+', description: 'Top 10 all-time in NBA history' },
+    { stat: 'Games', value: '1,450+', description: 'One of the most durable players ever' },
   ];
+
+  // LeBron quotes for motivation
+  const quotes = [
+    "Don't be afraid of failure. This is the way to succeed.",
+    "You can't be afraid to fail. It's the only way you succeed. You're not gonna succeed all the time and I know that.",
+    "I'm going to use all my tools, my God-given ability, and make the best life I can with it.",
+    "I think the reason why I'm the person who I am today is because I went through those tough times when I was younger.",
+    "I like criticism. It makes you strong.",
+  ];
+  
+  // Recent content from community
+  const communityContent = [
+    { 
+      id: '1',
+      user: 'LakersGirl24',
+      title: 'The King Takes Flight',
+      image: 'https://via.placeholder.com/150',
+      likes: 342,
+      comments: 57,
+      timestamp: '2 hours ago',
+    },
+    { 
+      id: '2',
+      user: 'HoopsDreamer',
+      title: 'LeBron's Leadership in Action',
+      image: 'https://via.placeholder.com/150',
+      likes: 289,
+      comments: 41,
+      timestamp: '4 hours ago',
+    },
+    { 
+      id: '3',
+      user: 'Basketball_Historian',
+      title: 'Game 7 - 2016 Finals Revisited',
+      image: 'https://via.placeholder.com/150',
+      likes: 512,
+      comments: 98,
+      timestamp: '1 day ago',
+    },
+  ];
+  
+  // Get a random quote
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Glaze</Text>
-          <Text style={styles.headerSubtitle}>AI-enhanced music for your mood</Text>
+          <Text style={styles.headerSubtitle}>Everything LeBron James</Text>
         </View>
         
-        {/* Mood selector */}
-        <View style={styles.moodContainer}>
-          <Text style={styles.sectionTitle}>How are you feeling today?</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.moodsRow}>
-            {moods.map(mood => (
-              <TouchableOpacity 
-                key={mood.id} 
-                style={[
-                  styles.moodButton, 
-                  selectedMood === mood.id && styles.selectedMoodButton,
-                  { borderColor: Colors[colorScheme ?? 'light'].tint }
-                ]}
-                onPress={() => setSelectedMood(mood.id)}
-              >
-                <Text style={styles.moodEmoji}>{mood.emoji}</Text>
-                <Text style={[
-                  styles.moodLabel, 
-                  selectedMood === mood.id && { color: Colors[colorScheme ?? 'light'].tint }
-                ]}>
-                  {mood.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-        
-        <Text style={styles.sectionTitle}>Recommended for you</Text>
-        {recommendations.map((item) => (
-          <View key={item.id} style={[styles.recommendationCard, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
-            <Image source={{ uri: item.cover }} style={styles.recommendationImage} />
-            <View style={styles.recommendationInfo}>
-              <Text style={styles.recommendationTitle}>{item.title}</Text>
-              <Text style={styles.recommendationDescription}>{item.description}</Text>
-              <TouchableOpacity 
-                style={[styles.playButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
-              >
-                <Text style={styles.playButtonText}>Play</Text>
-              </TouchableOpacity>
-            </View>
+        {/* Featured Highlight */}
+        <View style={[styles.featuredContainer, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
+          <Image 
+            source={{ uri: 'https://via.placeholder.com/400x250' }} 
+            style={styles.featuredImage} 
+          />
+          <View style={styles.featuredContent}>
+            <Text style={styles.featuredTitle}>The King's Journey</Text>
+            <Text style={styles.featuredDescription}>
+              From Akron to global icon - explore LeBron's incredible career
+            </Text>
+            <TouchableOpacity 
+              style={[styles.featuredButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
+            >
+              <Text style={styles.featuredButtonText}>Watch Now</Text>
+            </TouchableOpacity>
           </View>
-        ))}
-        
-        <View style={styles.uploadContainer}>
-          <Text style={styles.uploadTitle}>Add Your Own Music</Text>
-          <Text style={styles.uploadDescription}>
-            Upload your tracks to enhance your Glaze experience
-          </Text>
-          <TouchableOpacity 
-            style={[styles.uploadButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
-          >
-            <Text style={styles.uploadButtonText}>Upload Music</Text>
-          </TouchableOpacity>
         </View>
+        
+        {/* Career Highlights Section */}
+        <Text style={styles.sectionTitle}>Career Highlights</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.highlightsContainer}>
+          {careerHighlights.map(highlight => (
+            <TouchableOpacity key={highlight.id} style={styles.highlightCard}>
+              <Image source={{ uri: highlight.image }} style={styles.highlightImage} />
+              <View style={[styles.highlightContent, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
+                <Text style={styles.highlightTitle}>{highlight.title}</Text>
+                <Text style={styles.highlightDescription} numberOfLines={2}>{highlight.description}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        
+        {/* Quote of the Day */}
+        <View style={[styles.quoteContainer, { backgroundColor: Colors[colorScheme ?? 'light'].tint + '20' }]}>
+          <Text style={styles.quoteText}>"{randomQuote}"</Text>
+          <Text style={[styles.quoteAttribution, { color: Colors[colorScheme ?? 'light'].tint }]}>- LeBron James</Text>
+        </View>
+        
+        {/* Career Stats */}
+        <Text style={styles.sectionTitle}>Career Stats</Text>
+        <View style={[styles.statsContainer, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
+          {careerStats.map((stat, index) => (
+            <View key={index} style={styles.statItem}>
+              <Text style={[styles.statValue, { color: Colors[colorScheme ?? 'light'].tint }]}>{stat.value}</Text>
+              <Text style={styles.statName}>{stat.stat}</Text>
+              <Text style={styles.statDescription}>{stat.description}</Text>
+            </View>
+          ))}
+        </View>
+        
+        {/* Community Content */}
+        <View style={styles.communitySection}>
+          <View style={styles.communityHeader}>
+            <Text style={styles.sectionTitle}>Community Highlights</Text>
+            <TouchableOpacity>
+              <Text style={[styles.viewAllButton, { color: Colors[colorScheme ?? 'light'].tint }]}>View All</Text>
+            </TouchableOpacity>
+          </View>
+          
+          {communityContent.map(content => (
+            <TouchableOpacity key={content.id} style={[styles.communityPost, { backgroundColor: Colors[colorScheme ?? 'light'].cardBackground }]}>
+              <Image source={{ uri: content.image }} style={styles.communityImage} />
+              <View style={styles.communityContent}>
+                <Text style={styles.communityTitle}>{content.title}</Text>
+                <Text style={styles.communityUser}>Posted by {content.user}</Text>
+                <View style={styles.communityMeta}>
+                  <Text style={styles.communityMetaText}>{content.likes} likes</Text>
+                  <Text style={styles.communityMetaText}>{content.comments} comments</Text>
+                  <Text style={styles.communityMetaText}>{content.timestamp}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        
+        {/* Share Your Moments CTA */}
+        <TouchableOpacity 
+          style={[styles.ctaContainer, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}
+        >
+          <Text style={styles.ctaText}>Share Your LeBron Moment</Text>
+          <Text style={styles.ctaSubtext}>Add your highlights to the Glaze community</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -136,103 +204,172 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     marginTop: 4,
   },
+  featuredContainer: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 24,
+  },
+  featuredImage: {
+    width: '100%',
+    height: 200,
+  },
+  featuredContent: {
+    padding: 16,
+  },
+  featuredTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  featuredDescription: {
+    fontSize: 14,
+    opacity: 0.8,
+    marginBottom: 12,
+  },
+  featuredButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+  },
+  featuredButtonText: {
+    color: 'white',
+    fontWeight: '600',
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 24,
     marginBottom: 16,
   },
-  moodContainer: {
-    marginBottom: 20,
+  highlightsContainer: {
+    marginBottom: 24,
   },
-  moodsRow: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  moodButton: {
-    alignItems: 'center',
-    padding: 12,
+  highlightCard: {
+    width: 280,
+    borderRadius: 12,
     marginRight: 16,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    width: 100,
-  },
-  selectedMoodButton: {
-    borderWidth: 2,
-  },
-  moodEmoji: {
-    fontSize: 28,
-    marginBottom: 8,
-  },
-  moodLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  recommendationCard: {
-    flexDirection: 'row',
-    borderRadius: 10,
-    marginBottom: 16,
     overflow: 'hidden',
   },
-  recommendationImage: {
-    width: 120,
-    height: 120,
+  highlightImage: {
+    width: '100%',
+    height: 160,
   },
-  recommendationInfo: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'center',
+  highlightContent: {
+    padding: 12,
   },
-  recommendationTitle: {
-    fontSize: 18,
+  highlightTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 4,
   },
-  recommendationDescription: {
+  highlightDescription: {
     fontSize: 14,
     opacity: 0.7,
+  },
+  quoteContainer: {
+    padding: 20,
+    borderRadius: 12,
+    marginVertical: 24,
+  },
+  quoteText: {
+    fontSize: 18,
+    fontStyle: 'italic',
+    lineHeight: 26,
     marginBottom: 12,
   },
-  playButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
-  },
-  playButtonText: {
-    color: 'white',
-    fontWeight: '600',
-  },
-  uploadContainer: {
-    marginTop: 20,
-    marginBottom: 40,
-    padding: 20,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: '#ddd',
-    alignItems: 'center',
-  },
-  uploadTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  uploadDescription: {
+  quoteAttribution: {
     fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 20,
+    fontWeight: '600',
+    alignSelf: 'flex-end',
+  },
+  statsContainer: {
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+  },
+  statItem: {
+    marginBottom: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    paddingBottom: 16,
+  },
+  statValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  statName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  statDescription: {
+    fontSize: 14,
     opacity: 0.7,
   },
-  uploadButton: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 24,
+  communitySection: {
+    marginBottom: 24,
   },
-  uploadButtonText: {
-    color: 'white',
+  communityHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  viewAllButton: {
+    fontSize: 14,
     fontWeight: '600',
+  },
+  communityPost: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+  },
+  communityImage: {
+    width: 100,
+    height: 100,
+  },
+  communityContent: {
+    flex: 1,
+    padding: 12,
+    justifyContent: 'center',
+  },
+  communityTitle: {
     fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  communityUser: {
+    fontSize: 14,
+    opacity: 0.7,
+    marginBottom: 8,
+  },
+  communityMeta: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  communityMetaText: {
+    fontSize: 12,
+    opacity: 0.6,
+    marginRight: 10,
+  },
+  ctaContainer: {
+    padding: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  ctaText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 4,
+  },
+  ctaSubtext: {
+    fontSize: 14,
+    color: 'white',
+    opacity: 0.9,
   },
 }); 
