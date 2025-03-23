@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, TouchableOpacity, StyleSheet, View } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -22,8 +22,16 @@ export default function TabLayout() {
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 90,
+            paddingBottom: 20,
           },
-          default: {},
+          default: {
+            height: 70,
+            paddingBottom: 10,
+          },
         }),
       }}>
       <Tabs.Screen
@@ -38,6 +46,17 @@ export default function TabLayout() {
         options={{
           title: 'Glaze',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="sparkles" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="upload"
+        options={{
+          title: '',
+          tabBarIcon: ({ color }) => (
+            <View style={[styles.uploadButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}>
+              <IconSymbol size={24} name="plus" color="#ffffff" />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
@@ -57,3 +76,14 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  uploadButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+});
