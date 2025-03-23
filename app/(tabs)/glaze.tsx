@@ -18,7 +18,7 @@ export default function GlazeScreen() {
     { 
       id: '2', 
       title: 'All-Time Scoring Leader', 
-      description: 'Surpassed Kareem Abdul-Jabbar as NBA's all-time leading scorer on February 7, 2023', 
+      description: "Surpassed Kareem Abdul-Jabbar as NBA's all-time leading scorer on February 7, 2023",
       image: 'https://via.placeholder.com/400x200',
     },
     { 
@@ -67,7 +67,7 @@ export default function GlazeScreen() {
     { 
       id: '2',
       user: 'HoopsDreamer',
-      title: 'LeBron's Leadership in Action',
+      title: "LeBron's Leadership in Action",
       image: 'https://via.placeholder.com/150',
       likes: 289,
       comments: 41,
