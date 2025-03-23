@@ -55,10 +55,10 @@ export default function TabLayout() {
           name="upload"
           options={{
             title: '',
-            tabBarButton: props => (
+            tabBarButton: ({ accessibilityState, onPress }) => (
               <TouchableOpacity
-                {...props}
-                style={[styles.uploadButtonContainer]}
+                accessibilityState={accessibilityState}
+                style={styles.uploadButtonContainer}
                 onPress={() => setModalVisible(true)}
               >
                 <View style={[styles.uploadButton, { backgroundColor: Colors[colorScheme ?? 'light'].tint }]}>
