@@ -1,50 +1,82 @@
-# Welcome to your Expo app 👋
+# Lebronify
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Lebronify is a music streaming platform that allows users to listen to and upload their own music. It's a Spotify-inspired app with a unique "Glaze" feature that provides AI-enhanced music recommendations.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Home**: Discover new music and see your recently played tracks
+- **Glaze**: Get AI-enhanced music recommendations based on your mood
+- **Library**: Access your playlists, artists, albums, and uploaded music
+- **Account**: Manage your profile and app settings
 
-   ```bash
+## Available on
+
+- **Mobile App**: Android and iOS (primary platform)
+- **Web**: Accessible through any modern browser
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm or yarn
+- Expo CLI
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone git@github.com:Richierichman15/lebronify.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd lebronify
+   ```
+
+3. Install dependencies:
+   ```
    npm install
    ```
 
-2. Start the app
+### Running the App
 
-   ```bash
-    npx expo start
+#### Mobile (using Expo)
+
+1. Start the development server:
+   ```
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+2. Scan the QR code with the Expo Go app on your phone, or press:
+   - `a` for Android emulator
+   - `i` for iOS simulator
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+#### Web
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Run the web version:
+   ```
+   npm run web
+   ```
 
-## Get a fresh project
+## Development Roadmap
 
-When you're ready, run:
+- [ ] User authentication
+- [ ] Music upload functionality
+- [ ] Music player controls
+- [ ] Backend services for music storage
+- [ ] Playlist creation and management
+- [ ] Social sharing features
 
-```bash
-npm run reset-project
-```
+## Contributing
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Contributions are welcome! Please feel free to submit a pull request.
 
-## Learn more
+## License
 
-To learn more about developing your project with Expo, look at the following resources:
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Acknowledgements
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Design inspired by Spotify
+- Built with React Native and Expo
